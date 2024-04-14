@@ -5,23 +5,23 @@ services:
   - docker
 
 before_install:
-  - docker build -t legendlight/react-project/react-test -f ./client/Dockerfile.dev ./client
+  - docker build -t legendlight/react-test -f ./client/Dockerfile.dev ./client
 
 script:
-  - docker run -e CI=true legendlight/react-project/react-test npm test
+  - docker run -e CI=true legendlight/react-test npm test
 
 after_success:
-  - docker build -t legendlight/react-project/multi-client ./client
-  - docker build -t legendlight/react-project/multi-nginx ./nginx
-  - docker build -t legendlight/react-project/multi-server ./server
-  - docker build -t legendlight/react-project/multi-worker ./worker
+  - docker build -t legendlight/multi-client ./client
+  - docker build -t legendlight/multi-nginx ./nginx
+  - docker build -t legendlight/multi-server ./server
+  - docker build -t legendlight/multi-worker ./worker
   # Log in to the docker CLI
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
   # Take those images and push them to docker hub
-  - docker push legendlight/react-project/multi-client
-  - docker push legendlight/react-project/multi-nginx
-  - docker push legendlight/react-project/multi-server
-  - docker push legendlight/react-project/multi-worker
+  - docker push legendlight/multi-client
+  - docker push legendlight/multi-nginx
+  - docker push legendlight/multi-server
+  - docker push legendlight/multi-worker
 
 # deploy:
 #   provider: elasticbeanstalk
